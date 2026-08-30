@@ -190,9 +190,20 @@ function AuthedLayout() {
     setMoreOpen(false);
   }, [loc.pathname]);
 
-  const go = (search: Record<string, string>) => {
+  const go = (search: {
+    capture?: "camera" | "manual";
+    jobId?: string;
+    expenseId?: string;
+  }) => {
     setAddOpen(false);
-    navigate({ to: "/expenses/new", search });
+    navigate({
+      to: "/expenses/new",
+      search: {
+        capture: search.capture,
+        jobId: search.jobId,
+        expenseId: search.expenseId,
+      },
+    });
   };
 
   const handlePickedFile = (file: File | undefined) => {
@@ -220,7 +231,7 @@ function AuthedLayout() {
       // browser navigates or refreshes; the new-expense screen polls the row.
       void process({ data: { id } }).catch(() => {/* error captured in row */});
 
-      navigate({ to: "/expenses/new", search: { jobId: id } });
+      navigate({ to: "/expenses/new", search: { capture: undefined, jobId: id, expenseId: undefined } });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Couldn't start receipt", { id: "receipt-flow" });
     }
@@ -338,7 +349,7 @@ function AuthedLayout() {
             type="button"
             onClick={() => {
               const j = readyJobs[0] ?? inProgressJobs[0] ?? failedJobs[0];
-              if (j) navigate({ to: "/expenses/new", search: { jobId: j.id } });
+              if (j) navigate({ to: "/expenses/new", search: { capture: undefined, jobId: j.id, expenseId: undefined } });
             }}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}

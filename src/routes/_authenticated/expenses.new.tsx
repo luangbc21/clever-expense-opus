@@ -252,7 +252,7 @@ function NewExpense() {
       toast.success("Parsing in background…", { id: "receipt-flow", duration: 2000 });
       filledRef.current = false;
       void process({ data: { id } }).catch(() => {/* status persists in row */});
-      nav({ to: "/expenses/new", search: { jobId: id }, replace: true });
+      nav({ to: "/expenses/new", search: { capture: undefined, jobId: id, expenseId: undefined }, replace: true });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Couldn't open that file", { id: "receipt-flow" });
     }
