@@ -230,7 +230,7 @@ function ExpensesIndex() {
                       {e.status === "draft" ? (
                         <Link
                           to="/expenses/new"
-                          search={{ expenseId: e.id }}
+                          search={{ capture: undefined, jobId: undefined, expenseId: e.id }}
                           className="group block bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-4 rounded-3xl transition-all hover:bg-white/[0.06] hover:border-white/20 active:scale-[0.99]"
                         >
                           <ExpenseRow e={e} cat={cat} CatIcon={CatIcon} styles={styles} time={time} />
