@@ -190,9 +190,20 @@ function AuthedLayout() {
     setMoreOpen(false);
   }, [loc.pathname]);
 
-  const go = (search: Record<string, string>) => {
+  const go = (search: {
+    capture?: "camera" | "manual";
+    jobId?: string;
+    expenseId?: string;
+  }) => {
     setAddOpen(false);
-    navigate({ to: "/expenses/new", search });
+    navigate({
+      to: "/expenses/new",
+      search: {
+        capture: search.capture,
+        jobId: search.jobId,
+        expenseId: search.expenseId,
+      },
+    });
   };
 
   const handlePickedFile = (file: File | undefined) => {
